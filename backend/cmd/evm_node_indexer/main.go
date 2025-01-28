@@ -723,7 +723,7 @@ func _splitAndVerifyJsonArrayAddElement(r *[][]byte, element []byte, lastId int6
 		return -1, fmt.Errorf("error decoding '%s': %w", element, err)
 	}
 
-	// negativ ids signals an issue
+	// negative ids signals an issue
 	if data.Id < 0 {
 		return -1, fmt.Errorf("error, provided Id (%d) < 0", data.Id)
 	}
