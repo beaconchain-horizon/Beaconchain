@@ -232,7 +232,7 @@ func statisticsLoop(client rpc.Client) {
 		var loopError error
 		latestEpoch := cache.LatestFinalizedEpoch.Get()
 		if latestEpoch == 0 {
-			log.Error(nil, "error retreiving latest finalized epoch from cache", 0)
+			log.Error(nil, "error retrieving latest finalized epoch from cache", 0)
 			time.Sleep(time.Minute)
 			continue
 		}
