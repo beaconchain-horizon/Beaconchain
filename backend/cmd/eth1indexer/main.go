@@ -38,7 +38,7 @@ import (
 
 func Run() {
 	fs := flag.NewFlagSet("fs", flag.ExitOnError)
-	erigonEndpoint := fs.String("erigon", "", "Erigon archive node enpoint")
+	erigonEndpoint := fs.String("erigon", "", "Erigon archive node endpoint")
 	block := fs.Int64("block", 0, "Index a specific block")
 
 	reorgDepth := fs.Int("reorg.depth", 20, "Lookback to check and handle chain reorgs")
