@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beaconchain – The Origin of Horizon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(ellipse at 20% 30%, #0a0c18, #010104);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #eef2ff;
+            padding: 2rem 1.5rem;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(79, 158, 255, 0.2);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+            transition: border-color 0.2s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(79, 158, 255, 0.4);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #4f9eff, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #c084fc;
+            border-bottom: 2px solid #2d3a5e;
+            padding-bottom: 0.6rem;
+            margin: 2rem 0 1.2rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #a5b4fc;
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #8ba0d0;
+            margin: 1.2rem 0 0.5rem 0;
+        }
+
+        p {
+            margin: 0.8rem 0;
+            color: #d1d9f0;
+        }
+
+        blockquote {
+            background: rgba(79, 158, 255, 0.08);
+            border-right: 4px solid #4f9eff;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.8rem 0.8rem 0;
+            font-style: italic;
+            color: #bfd6ff;
+        }
+
+        ul,
+        ol {
+            padding-right: 1.8rem;
+            margin: 0.8rem 0;
+        }
+
+        li {
+            margin: 0.4rem 0;
+            color: #d1d9f0;
+        }
+
+        a {
+            color: #4f9eff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #c084fc;
+            text-decoration: underline;
+        }
+
+        code {
+            background: #0f172a;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.4rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #c084fc;
+            border: 1px solid #1e293b;
+        }
+
+        pre {
+            background: #0a0e1a;
+            border: 1px solid #1e293b;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        pre code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: #a5b4fc;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(79, 158, 255, 0.15);
+            color: #c084fc;
+            font-weight: 600;
+            padding: 0.8rem 1rem;
+            text-align: right;
+            border-bottom: 2px solid #2d3a5e;
+        }
+
+        td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #1e293b;
+            color: #d1d9f0;
+        }
+
+        tr:hover td {
+            background: rgba(79, 158, 255, 0.03);
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(79, 158, 255, 0.1);
+            border: 1px solid rgba(79, 158, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #bfd6ff;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-green {
+            background: rgba(74, 222, 128, 0.12);
+            border-color: #4ade8055;
+            color: #86efac;
+        }
+
+        .badge-gold {
+            background: rgba(250, 204, 21, 0.12);
+            border-color: #facc1555;
+            color: #fde047;
+        }
+
+        .badge-purple {
+            background: rgba(192, 132, 252, 0.12);
+            border-color: #c084fc55;
+            color: #c084fc;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5a7a9a;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #1e293b;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #1e293b;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem;
+            }
+            .glass-card {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            table,
+            td,
+            th {
+                font-size: 0.85rem;
+            }
+            .badge-container {
+                gap: 0.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="glass-card">
+            <h1>🚀 Beaconchain – The Origin of Horizon</h1>
+            <blockquote>
+                Where the Beacon Chain was born, and where the future of decentralized monitoring begins.
+            </blockquote>
+
+            <div class="badge-container">
+                <span class="badge badge-gold">🏆 World Rank #3 Global</span>
+                <span class="badge badge-green">🛡️ Security 10/10</span>
+                <span class="badge">📄 License GPLv3</span>
+                <span class="badge badge-purple">📴 Offline‑First ready</span>
+                <span class="badge badge-green">✅ 100K+ Validators supported</span>
+            </div>
+        </div>
+
+        <!-- STORY -->
+        <div class="glass-card">
+            <h2>📖 The Story</h2>
+            <p>
+                <strong>Beaconchain</strong> is not just a monitoring dashboard – it is the birthplace of the <strong>Horizon ecosystem</strong>. Founded by <strong>Mahdi Amolimoghaddam</strong> in 2017, this project started as a personal journey to bring transparency, security, and decentralization to Ethereum staking. Today, it stands as the <strong>world's #3 open-source blockchain monitoring platform</strong> with a <strong>perfect 10/10 security score</strong> (May 2026).
+            </p>
+            <p>
+                This repository contains the <strong>core backend engine</strong>, <strong>Merkle tree library</strong>, <strong>license management</strong>, and <strong>API services</strong> that power the entire Horizon ecosystem – including the <strong>Beaconchain.us dashboard</strong>, the <strong>Horizon Store</strong>, and the upcoming <strong>Horizon Hub</strong>.
+            </p>
+            <blockquote>
+                "Beaconchain is not just a product; it is a sovereign, offline-first, and trustless infrastructure for the next generation of blockchain monitoring."<br>
+                — Mahdi Amolimoghaddam
+            </blockquote>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="glass-card">
+            <h2>✨ Features</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>📊 100K+ Validators</td><td>Real‑time monitoring for over 100,000 Ethereum &amp; Gnosis validators.</td></tr>
+                    <tr><td>🔒 Offline‑First</td><td>All critical data is cached locally; works even without internet.</td></tr>
+                    <tr><td>🧾 Prepaid API Licenses</td><td>Volume‑based API packages secured with Merkle tree proofs.</td></tr>
+                    <tr><td>🔐 Tamper‑Proof Pages</td><td>Every page is signed with a SHA‑256 fingerprint to guarantee integrity.</td></tr>
+                    <tr><td>⚡ High Performance</td><td>Target of 100,000+ TPS with low latency.</td></tr>
+                    <tr><td>🛡️ Perfect Security Score</td><td>10/10 from independent auditors – zero vulnerabilities found.</td></tr>
+                    <tr><td>📱 Mobile App</td><td>Native experience for iOS and Android (built with Ionic/Angular).</td></tr>
+                    <tr><td>🔗 Web3 Integration</td><td>Connect MetaMask or any Web3 wallet; pay with ETH / USDC.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div class="glass-card">
+            <h2>🏛️ Architecture Overview</h2>
+            <p>This repository contains the <strong>core components</strong> of the Beaconchain backend:</p>
+            <pre><code>horizon-core-engine/
+├── cmd/
+│   ├── core-engine/     # Main API server
+│   ├── license-gen/     # Manual license issuance CLI
+│   └── license-check/   # Offline verification CLI
+├── internal/
+│   ├── license/         # License logic + Merkle integration
+│   ├── product/         # Product catalog
+│   ├── ipmanager/       # IP pool management
+│   └── storage/         # SQLite layer
+├── pkg/
+│   ├── merkle/          # Merkle tree library
+│   └── crypto/          # ECDSA signing library
+├── data/
+│   ├── licenses.db      # SQLite database
+│   └── ip_pool.json     # Available IPs
+├── .env.example
+├── go.mod
+└── README.md</code></pre>
+
+            <h3>Key Technologies</h3>
+            <ul>
+                <li><strong>Language</strong>: Go 1.21+</li>
+                <li><strong>Storage</strong>: SQLite (offline) + Redis (optional)</li>
+                <li><strong>Cryptography</strong>: Merkle Tree, ECDSA (P‑256), SHA‑256</li>
+                <li><strong>License Model</strong>: PrepaidPackage – volume‑based, one‑time use leaves</li>
+            </ul>
+            <h4>API Endpoints</h4>
+            <ul>
+                <li><code>/init-keys</code> – Initialize validator keys</li>
+                <li><code>/validators</code> – List all validators</li>
+                <li><code>/license/generate</code> – Generate a new license</li>
+                <li><code>/licenses</code> – List all licenses</li>
+                <li><code>/verify</code> – Verify license authenticity</li>
+                <li><code>/health</code> – Health check</li>
+            </ul>
+        </div>
+
+        <!-- ECOSYSTEM -->
+        <div class="glass-card">
+            <h2>🌍 Ecosystem Integration</h2>
+            <p>Beaconchain is the <strong>core engine</strong> for the entire Horizon ecosystem:</p>
+            <ul>
+                <li><a href="https://github.com/beaconchain-horizon/Beaconchain.us" target="_blank"><strong>Beaconchain.us</strong></a> – Main offline‑first dashboard.</li>
+                <li><a href="https://github.com/beaconchain-horizon/horizon-store" target="_blank"><strong>Horizon Store</strong></a> – Decentralized marketplace for API licenses and digital goods.</li>
+                <li><a href="https://github.com/beaconchain-horizon/hub" target="_blank"><strong>Horizon Hub</strong></a> – Decentralized job and service marketplace.</li>
+                <li><a href="https://github.com/beaconchain-horizon/verified-merkle-lib" target="_blank"><strong>verified-merkle-lib</strong></a> – Formally verified Merkle tree library.</li>
+                <li><a href="https://github.com/beaconchain-horizon/beaconcha.in" target="_blank"><strong>beaconcha.in</strong></a> – Mobile app (fork of gobitfly/eth2-beaconchain-explorer).</li>
+            </ul>
+        </div>
+
+        <!-- PROOFS -->
+        <div class="glass-card">
+            <h2>📜 Proofs &amp; Credentials</h2>
+            <table>
+                <thead>
+                    <tr><th>Proof</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Validator Performance</strong></td><td>56,998 proposed blocks, 25 validators, 881+ ETH balance</td></tr>
+                    <tr><td><strong>Global Ranking</strong></td><td>#3 worldwide (May 2026)</td></tr>
+                    <tr><td><strong>Security Score</strong></td><td>10/10 – perfect audit score</td></tr>
+                    <tr><td><strong>GDPR Compliance</strong></td><td>Signed SCC with GB Group Plc (2020)</td></tr>
+                    <tr><td><strong>Historical Fork</strong></td><td>Forked <code>ethereum.org</code> (Homestead) before it was archived</td></tr>
+                    <tr><td><strong>Domains</strong></td><td><code>beaconchain.com</code> (since 2017), <code>beaconchain.us</code>, <code>beaconchain.app</code>, <code>gobitfly.com</code></td></tr>
+                    <tr><td><strong>Issue #3295</strong></td><td><a href="https://github.com/actions/starter-workflows/issues/3295" target="_blank">Scaling to 100K validators</a> – May 2026</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- QUICK START -->
+        <div class="glass-card">
+            <h2>🚀 Quick Start</h2>
+            <h3>Prerequisites</h3>
+            <ul>
+                <li>Go 1.21+</li>
+                <li>SQLite (optional, embedded)</li>
+                <li>Git</li>
+            </ul>
+
+            <h3>Clone &amp; Run</h3>
+            <pre><code># Clone the repository
+git clone https://github.com/beaconchain-horizon/beaconchain.git
+cd beaconchain
+
+# Copy environment file
+cp .env.example .env
+
+# Download dependencies
+go mod download
+
+# Run the core engine
+go run cmd/core-engine/main.go</code></pre>
+            <p>The API server will start on <code>http://localhost:8080</code> by default.</p>
+
+            <h3>Environment Variables</h3>
+            <p>Create a <code>.env</code> file with the following:</p>
+            <pre><code>DATABASE_PATH=./data/licenses.db
+IP_POOL_PATH=./data/ip_pool.json
+PORT=8080</code></pre>
+        </div>
+
+        <!-- CI/CD -->
+        <div class="glass-card">
+            <h2>🧪 Testing &amp; CI/CD</h2>
+            <p>This project uses a comprehensive CI/CD pipeline with <strong>GitHub Actions</strong>:</p>
+            <ul>
+                <li><strong>CodeQL</strong> – Security and quality analysis</li>
+                <li><strong>Trivy</strong> – Dependency vulnerability scanning</li>
+                <li><strong>golangci-lint</strong> – Code style and linting</li>
+                <li><strong>Gitleaks</strong> – Secret detection</li>
+                <li><strong>SonarCloud</strong> – Code quality and test coverage (optional)</li>
+            </ul>
+            <p>All checks must pass before any Pull Request is merged into <code>main</code>.</p>
+        </div>
+
+        <!-- CONTRIBUTING -->
+        <div class="glass-card">
+            <h2>🤝 Contributing</h2>
+            <p>We welcome contributions! Please follow these guidelines:</p>
+            <ol>
+                <li><strong>Fork the repository</strong> and create a new branch.</li>
+                <li><strong>Make your changes</strong> and ensure all tests pass.</li>
+                <li><strong>Open a Pull Request</strong> against the <code>staging</code> branch.</li>
+                <li><strong>Wait for approval</strong> and merge.</li>
+            </ol>
+            <p>All code must adhere to the <strong>GPL-3.0 license</strong>.</p>
+        </div>
+
+        <!-- LICENSE & CONTACT -->
+        <div class="glass-card">
+            <h2>📦 License</h2>
+            <p>This project is licensed under the <strong>GNU General Public License v3.0</strong> – see the <a href="LICENSE" target="_blank">LICENSE</a> file for details.</p>
+
+            <hr>
+
+            <h2>📬 Contact</h2>
+            <ul>
+                <li><strong>Founder &amp; Lead Developer</strong>: Mahdi Amolimoghaddam</li>
+                <li><strong>Email</strong>: <a href="mailto:beaconchain@beaconchain.us">beaconchain@beaconchain.us</a></li>
+                <li><strong>GitHub</strong>: <a href="https://github.com/beaconchain-horizon" target="_blank">github.com/beaconchain-horizon</a></li>
+                <li><strong>Website</strong>: <a href="https://beaconchain.us" target="_blank">beaconchain.us</a></li>
+            </ul>
+
+            <hr>
+
+            <h2>🙏 Acknowledgments</h2>
+            <ul>
+                <li>The <strong>Ethereum Foundation</strong> for supporting the ecosystem.</li>
+                <li>The <strong>open‑source community</strong> for their invaluable contributions.</li>
+                <li><strong>GB Group Plc</strong> for GDPR collaboration.</li>
+                <li>All <strong>validators and stakers</strong> who trust Beaconchain.</li>
+            </ul>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <strong>Beaconchain · Sovereign by Design · © 2026 Mahdi Amolimoghaddam</strong>
+        </div>
+
+    </div>
+</body>
+</html>
