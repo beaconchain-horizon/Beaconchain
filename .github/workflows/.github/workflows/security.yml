@@ -1,0 +1,137 @@
+name: 🔒 Security & Code Quality
+
+on:
+  push:
+    branches: [ main, staging, develop ]
+  pull_request:
+    branches: [ main, staging ]
+  schedule:
+    - cron: '0 2 * * 1'  # Run every Monday at 2 AM
+
+jobs:
+  # ========================================
+  # ۱. CodeQL Analysis (Go, JavaScript, etc.)
+  # ========================================
+  codeql:
+    name: 🛡️ CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'go', 'javascript' ]  # Add your project languages
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: 🏗️ Build project (if needed)
+        run: |
+          if [ -f go.mod ]; then
+            go mod download
+            go build ./...
+          fi
+
+      - name: 📊 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+
+  # ========================================
+  # ۲. Dependency Scanning
+  # ========================================
+  dependency-scan:
+    name: 📦 Dependency Scanning
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐛 Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: 📤 Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ========================================
+  # ۳. SonarCloud Analysis (optional)
+  # ========================================
+  sonarcloud:
+    name: ☁️ SonarCloud Analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ☁️ Run SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=beaconchain-horizon
+            -Dsonar.projectKey=beaconchain-horizon_Beaconchain
+            -Dsonar.go.coverage.reports=coverage.out
+            -Dsonar.sources=.
+            -Dsonar.exclusions=**/vendor/**,**/*_test.go
+
+  # ========================================
+  # ۴. Lint & Format Check
+  # ========================================
+  lint:
+    name: 🧹 Lint & Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐹 Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: 🧪 Run golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          args: --timeout=5m ./...
+
+  # ========================================
+  # ۵. Secret Scanning (Pre-commit)
+  # ========================================
+  secret-scan:
+    name: 🔑 Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔍 Check for exposed secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
