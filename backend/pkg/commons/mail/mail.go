@@ -7,6 +7,7 @@ import (
 
 	"fmt"
 	"net/smtp"
+	"strings"
 	"time"
 
 	"github.com/gobitfly/beaconchain/pkg/commons/db"
@@ -162,8 +163,19 @@ func SendMailMailgun(to, subject, msgHtml, msgText string, attachment []types.Em
 	return nil
 }
 
+func containsSMTPHeaderBreak(value string) bool {
+	return strings.ContainsAny(value, "\r\n")
+}
+
 // SendMailSMTP sends an email to the given address with the given message, using smtp.
 func SendTextMailSMTP(to, subject, body string) error {
+	if containsSMTPHeaderBreak(to) {
+		return fmt.Errorf("invalid recipient address")
+	}
+	if containsSMTPHeaderBreak(subject) {
+		return fmt.Errorf("invalid subject")
+	}
+
 	server := utils.Config.Frontend.Mail.SMTP.Server // eg. smtp.gmail.com:587
 	host := utils.Config.Frontend.Mail.SMTP.Host     // eg. smtp.gmail.com
 	from := utils.Config.Frontend.Mail.SMTP.User     // eg. userxyz123@gmail.com
