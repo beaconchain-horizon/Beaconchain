@@ -1,4 +1,4 @@
-📄 README.md اصلاح‌شده برای مخزن Beaconchain
+📄Beaconchain
 
 ```markdown
 # 🔭 Beaconchain Horizon
@@ -134,12 +134,4 @@ Our location has never limited our ability to contribute – instead, it has dri
 
 ```
 
----
-
-## 📝 کامیت
-
-```bash
-git add README.md
-git commit -m "docs: update README with correct branding (Beaconchain as brand, Horizon as products)"
-git push origin mine
 ```
